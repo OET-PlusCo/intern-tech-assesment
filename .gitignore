@@ -193,4 +193,3 @@ cython_debug/
 .cursorignore
 .cursorindexingignore
 *.csv
-sample_solution_notebook.py
