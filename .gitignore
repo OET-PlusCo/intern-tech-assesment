@@ -193,3 +193,13 @@ cython_debug/
 .cursorignore
 .cursorindexingignore
 *.csv
+
+# AI Developer Assessment - Interviewer Materials
+# IMPORTANT: Do not share interviewer materials with candidates!
+ai_developer_assessment/interviewer_materials/
+
+# Progressive Assessments - Solution Guides
+# Do not share these with candidates!
+progressive_assessments/**/SOLUTION_GUIDE.md
+progressive_assessments/**/INTERVIEWER_CHECKLIST.md
+progressive_assessments/COMPLETE_GUIDE.md

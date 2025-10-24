@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  ml-api:
+    build: .
+    ports:
+      - "8000:8000"
+    # BUG: Hardcoded secrets exposed here too!
+    environment:
+      - API_KEY=sk-prod-1234567890abcdef
+      - DATABASE_PASSWORD=SuperSecret123!
+      - JWT_SECRET=my-jwt-secret-key-2024
+    # Better approach: use env_file or docker secrets
+    # env_file:
+    #   - .env
+    
+    # BUG: No resource limits - can consume all host resources
+    # deploy:
+    #   resources:
+    #     limits:
+    #       cpus: '1'
+    #       memory: 512M
+    
+    # BUG: No restart policy - won't recover from crashes
+    # restart: unless-stopped
+    
+    # BUG: No health check defined
+    # healthcheck:
+    #   test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+    #   interval: 30s
+    #   timeout: 10s
+    #   retries: 3
+
+

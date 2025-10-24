@@ -1,0 +1,9 @@
+# Interviewer materials - DO NOT COMMIT OR SHARE WITH CANDIDATES
+interviewer_materials/
+
+# Only candidate-facing files should be shared:
+# - README.md
+# - CANDIDATE_INSTRUCTIONS.md
+# - buggy_model_api.py
+# - requirements.txt
+

@@ -1,0 +1,10 @@
+# Environment variables template
+# Copy this to .env and fill in real values
+
+# API Configuration
+API_KEY=your-api-key-here
+DATABASE_PASSWORD=your-db-password-here
+JWT_SECRET=your-jwt-secret-here
+
+# Model Configuration
+MODEL_PATH=/app/models/churn_model.pkl
