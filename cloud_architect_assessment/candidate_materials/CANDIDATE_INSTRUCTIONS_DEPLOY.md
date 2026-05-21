@@ -4,52 +4,41 @@
 
 ## Scenario
 
-We deploy a small **Hello World frontend** per client on **Cloud Run**. Each client gets isolated infrastructure from Terraform, then **Cloud Build** builds the Docker image and deploys it.
+We deploy a small **Hello World** Next.js app per client on **Cloud Run** (UI and API in one codebase). Each client gets infrastructure from Terraform, then **Cloud Build** builds and deploys the container.
 
-Your sandbox already has (or will have) Terraform applied. The pipeline and app **mostly work** but several production-like issues are waiting for you.
+Apply Terraform, run the pipeline, create a **Cloud Build trigger**, and get the app working end-to-end in the sandbox.
 
 ## What you have
 
 | Path | Purpose |
 |------|---------|
-| `terraform/deploy/` | Base stack (Cloud Run, GCS, Artifact Registry, service accounts) |
-| `frontend/` | Node app: Hello World + greeting from env + GCS upload button |
-| `cloudbuild/cloudbuild.yaml` | CI: build image → push → deploy Cloud Run |
-| `cloudbuild/Dockerfile` | Multi-stage build for the frontend |
-| `cloudbuild/TRIGGER.md` | How to create a Cloud Build trigger (manual or push) |
-| `LEVELS.md` | Optional difficulty tiers |
+| `terraform/deploy/` | Cloud Run, GCS, Artifact Registry, service accounts |
+| `frontend/` | Next.js app + `/api/upload` |
+| `cloudbuild/` | `cloudbuild.yaml`, `Dockerfile`, `TRIGGER.md` |
+| `TESTING.md` | End-to-end verification checklist |
 
 ## Flow
 
-1. **Terraform** — `terraform apply` in `terraform/deploy/` (fix API enablement if apply fails).
-2. **Cloud Build (manual)** — `gcloud builds submit` from `candidate_materials/` to validate `cloudbuild.yaml`.
-3. **Cloud Build trigger** — create a trigger (manual or on push) with per-client **substitutions** — see `cloudbuild/TRIGGER.md`.
-4. **Verify** — run the trigger, open the Cloud Run URL, check the greeting, try the upload button.
-5. **Fix** — resolve seeded bugs until the app behaves as expected for a public demo.
+1. `terraform apply` in `terraform/deploy/`
+2. `gcloud builds submit` from this folder (see `cloudbuild/cloudbuild.yaml`)
+3. Create a Cloud Build trigger with per-client substitutions (`cloudbuild/TRIGGER.md`)
+4. Run the trigger and complete the steps in [`TESTING.md`](TESTING.md)
+
+## Testing scenario (summary)
+
+1. Open the Cloud Run URL in a browser.
+2. Confirm **Hello World** and the **greeting** text.
+3. Click upload to send an image to **Google Cloud Storage**.
+4. Confirm the **image appears on the page**, under the greeting.
+
+Full checklist: [`TESTING.md`](TESTING.md).
 
 You may use AI tools. Think out loud. Ask clarifying questions.
 
-## Expected end state
-
-- Browser shows **Hello World** and a **greeting** that reflects your client config (not `(not set at build time)`).
-- Cloud Run URL is **reachable without Google sign-in** (public webapp).
-- **Upload** succeeds and you can **see** the uploaded image (private bucket — design matters).
-- Deploying via Cloud Build does **not** wipe environment variables Terraform set.
-- For a second client, the **Cloud Run service name** can differ via build config (not a single hardcoded name everywhere).
-- A **Cloud Build trigger** exists (Terraform, `gcloud`, or Console + IaC follow-up) with correct substitutions including `_SERVICE_NAME` and `_RUNTIME_SA`.
-
-## What we may ask you to explain
-
-- Main sections of `cloudbuild.yaml` (build, push, deploy).
-- Main stages of the `Dockerfile` (build vs runtime).
-- Why frontend env vars often fail without Cloud Build → Docker → build wiring.
-- How to **speed up** repeated builds (e.g. layer cache, Artifact Registry as cache).
-- How a **trigger** differs from `gcloud builds submit` and which substitutions must live on the trigger.
-
 ## Ground rules
 
-- Prefer **Terraform / Cloud Build / gcloud** fixes over console-only changes (console is acceptable for exploration, not as the final answer).
-- **Least privilege** for IAM — avoid granting `roles/storage.admin` or project Owner to the runtime SA.
-- Say **"I don't know"** when appropriate; we value reasoning over guessing.
+- Prefer **Terraform / Cloud Build / gcloud** over console-only changes
+- Use **least privilege** for IAM
+- Per-client values belong on the **trigger** (or submit `--substitutions`)
 
-See `LEVELS.md` if your interviewer assigns a tier. Good luck.
+Your interviewer will share the expected scope and time box for your session. Good luck.

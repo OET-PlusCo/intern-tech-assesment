@@ -4,7 +4,7 @@ output "service_url" {
 }
 
 output "service_name" {
-  description = "Cloud Run service name — use in Cloud Build _SERVICE_NAME substitution"
+  description = "Cloud Run service name"
   value       = google_cloud_run_v2_service.app.name
 }
 

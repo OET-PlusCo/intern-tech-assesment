@@ -5,54 +5,41 @@ Live, shared-screen GCP assessments for Cloud Architect candidates. Two compleme
 | Track | Candidate doc | Focus | Duration |
 |-------|---------------|--------|----------|
 | **Modularization** | `candidate_materials/CANDIDATE_INSTRUCTIONS.md` | Terraform modules & multi-tenant **design** | ~60 min |
-| **Deploy & debug** | `candidate_materials/CANDIDATE_INSTRUCTIONS_DEPLOY.md` | Cloud Build, Cloud Run, IAM, intentional bugs | ~45–90 min (leveled) |
+| **Deploy & debug** | `candidate_materials/CANDIDATE_INSTRUCTIONS_DEPLOY.md` | Cloud Build, Cloud Run, IAM | ~45–90 min |
 
 Use **modularization** for architecture and module boundaries. Use **deploy & debug** for pipeline fluency, build-time env vars, deploy flags, and least-privilege IAM.
 
 ---
 
-## Folder structure
+## Folder structure (what is in git)
 
 ```
 cloud_architect_assessment/
 │
 ├── README.md
+├── INTERVIEWER_SETUP.md          ← How to install local interviewer pack
 │
-├── candidate_materials/              ← Share with candidate
-│   ├── CANDIDATE_INSTRUCTIONS.md           ← Modularization track
-│   ├── CANDIDATE_INSTRUCTIONS_DEPLOY.md    ← Deploy & debug track
-│   ├── ARCHITECTURE_QUESTIONS.md
-│   ├── LEVELS.md                           ← Deploy track difficulty tiers
-│   ├── frontend/                           ← Hello World app (deploy track)
-│   ├── cloudbuild/                         ← Pipeline + TRIGGER.md
-│   └── terraform/
-│       ├── main.tf                         ← Monolith to refactor (modularization)
-│       ├── variables.tf, outputs.tf, ...
-│       └── deploy/                         ← Base infra for deploy track
-│
-└── interviewer_materials/          ← KEEP PRIVATE
-    ├── INTERVIEWER_GUIDE.md                ← Modularization run-of-show
-    ├── INTERVIEWER_GUIDE_DEPLOY.md
-    ├── SOLUTION_GUIDE.md
-    ├── ANSWER_KEY_QUESTIONS.md
-    ├── SCORECARD.md
-    ├── SCORECARD_DEPLOY.md
-    ├── BUGS_AND_SOLUTIONS.md
-    ├── DISCUSSION_QUESTIONS_DEPLOY.md
-    └── ANALYSIS_DEPLOY.md
+└── candidate_materials/          ← Share with candidate only
+    ├── CANDIDATE_INSTRUCTIONS.md
+    ├── CANDIDATE_INSTRUCTIONS_DEPLOY.md
+    ├── TESTING.md                      ← E2E verification (deploy track)
+    ├── ARCHITECTURE_QUESTIONS.md
+    ├── frontend/
+    ├── cloudbuild/
+    └── terraform/
+        ├── main.tf               ← Monolith (modularization)
+        └── deploy/               ← Deploy track infra
 ```
+
+**Interviewer guides, scorecards, and answer keys** live in `interviewer_materials/` on your machine only — see [`INTERVIEWER_SETUP.md`](INTERVIEWER_SETUP.md). That folder is **gitignored** and must not be pushed.
 
 ---
 
 ## Track 1 — Modularization (~60 min)
 
-Evaluates **architectural reasoning** (not syntax puzzles):
-
 - Refactor `terraform/main.tf` into modules
 - Design onboarding for multiple clients
 - Open-ended discussion (`ARCHITECTURE_QUESTIONS.md`)
-
-**Interviewer:** `interviewer_materials/INTERVIEWER_GUIDE.md`, `SCORECARD.md`, `SOLUTION_GUIDE.md`
 
 | Phase | Time |
 |-------|------|
@@ -66,34 +53,11 @@ Evaluates **architectural reasoning** (not syntax puzzles):
 
 ## Track 2 — Deploy & debug (~45–90 min)
 
-Hands-on **Terraform → Cloud Build → Cloud Run** with seeded production-like bugs.
-
-| Level | Scope |
-|-------|--------|
-| Beginning | Build-time env bug, manual build + trigger, explain pipeline |
-| Intermediate | + env deploy flags, public access, per-client substitutions |
-| Advanced | + GCS IAM, signed URLs, API bootstrap |
-
-**Interviewer:** `INTERVIEWER_GUIDE_DEPLOY.md`, `BUGS_AND_SOLUTIONS.md`, `SCORECARD_DEPLOY.md`
-
-**Quick start:**
-
 1. `terraform apply` in `candidate_materials/terraform/deploy/`
-2. `gcloud builds submit` then create trigger (`cloudbuild/TRIGGER.md`)
-3. Candidate fixes bugs; score with `BUGS_AND_SOLUTIONS.md`
+2. `gcloud builds submit` then create a Cloud Build trigger (`cloudbuild/TRIGGER.md`)
+3. Candidate completes the flow in `candidate_materials/TESTING.md` (greeting, upload, image on page)
 
----
-
-## Scoring snapshot (modularization track)
-
-| Band | Score | Signal |
-|------|-------|--------|
-| Strong Hire | 85–100 | Multiple valid designs, deep trade-off reasoning |
-| Hire | 70–84 | One clean design, defends trade-offs when prompted |
-| Maybe | 55–69 | Refactor done, weak multi-client design |
-| No Hire | <55 | Cannot finish refactor or tool-name-only answers |
-
-Deploy track: see `interviewer_materials/SCORECARD_DEPLOY.md`.
+Scope and level are set by the interviewer using the local materials pack.
 
 ---
 

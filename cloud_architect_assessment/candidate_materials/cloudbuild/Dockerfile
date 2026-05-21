@@ -1,28 +1,28 @@
-# Assessment frontend — Node + Express serving static HTML
 FROM node:20-alpine AS build
 
 WORKDIR /app
+
 COPY frontend/package.json frontend/package-lock.json* ./
-RUN npm install --omit=dev
+RUN npm install
 
 COPY frontend/ ./
 
-# BUG 1 (intentional): build args are declared but Cloud Build does not pass them yet.
-# Candidate should wire: substitutions → docker build --build-arg → npm run build
-ARG APP_GREETING=unset
-ARG CLIENT_ID=unknown
-ENV APP_GREETING=${APP_GREETING}
-ENV CLIENT_ID=${CLIENT_ID}
-
 RUN npm run build
 
-FROM node:20-alpine
-WORKDIR /app
-COPY --from=build /app/node_modules ./node_modules
-COPY --from=build /app/server.js ./
-COPY --from=build /app/public ./public
-COPY --from=build /app/package.json ./
+FROM node:20-alpine AS runner
 
+WORKDIR /app
+
+ENV NODE_ENV=production
 ENV PORT=8080
+ENV HOSTNAME=0.0.0.0
+
+RUN addgroup --system --gid 1001 nodejs && adduser --system --uid 1001 nextjs
+
+COPY --from=build /app/public ./public
+COPY --from=build --chown=nextjs:nodejs /app/.next/standalone ./
+COPY --from=build --chown=nextjs:nodejs /app/.next/static ./.next/static
+
+USER nextjs
 EXPOSE 8080
 CMD ["node", "server.js"]

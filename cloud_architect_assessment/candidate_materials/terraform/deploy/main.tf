@@ -1,13 +1,3 @@
-###############################################################################
-# Webapp Stack — deploy track base infrastructure (post-apply: use Cloud Build)
-#
-# Intentional assessment gaps (candidates fix during session):
-#   - APIs are NOT auto-enabled (enable via Terraform or gcloud)
-#   - Cloud Run is NOT publicly invokable (Bug 3)
-#   - Runtime SA may lack GCS permissions for uploads (Bug 4)
-#   - Assets bucket is private (Bug 5 — need signed URLs in app/Terraform)
-###############################################################################
-
 terraform {
   required_version = ">= 1.5"
   required_providers {
@@ -30,12 +20,6 @@ provider "google" {
 resource "random_id" "suffix" {
   byte_length = 4
 }
-
-###############################################################################
-# NOTE: google_project_service resources are deliberately OMITTED.
-# If apply fails with "API not enabled", candidates should enable APIs via
-# Terraform or gcloud — UI-only fix scores lowest.
-###############################################################################
 
 resource "google_service_account" "app_runtime" {
   account_id   = "${var.client_slug}-webapp-runtime"
@@ -80,12 +64,9 @@ resource "google_storage_bucket" "assets" {
   force_destroy = true
 
   uniform_bucket_level_access = true
-
-  # Private bucket — objects are not public (Bug 5)
-  public_access_prevention = "enforced"
+  public_access_prevention    = "enforced"
 }
 
-# BUG 4 (intentional): objectAdmin binding commented out — uploads fail until fixed
 # resource "google_storage_bucket_iam_member" "runtime_object_admin" {
 #   bucket = google_storage_bucket.assets.name
 #   role   = "roles/storage.objectAdmin"
@@ -97,7 +78,6 @@ resource "google_cloud_run_v2_service" "app" {
   location = var.region
   project  = var.project_id
 
-  # Public access disabled at service level (Bug 3 — pair with IAM + deploy flags)
   ingress = "INGRESS_TRAFFIC_ALL"
 
   template {
@@ -130,13 +110,12 @@ resource "google_cloud_run_v2_service" "app" {
 
       env {
         name  = "APP_GREETING"
-        value = "Hello from Terraform (runtime)"
+        value = "Hello from Terraform"
       }
     }
   }
 }
 
-# BUG 3 (intentional): public invoker NOT granted — candidate enables in Terraform and/or Cloud Build
 # resource "google_cloud_run_v2_service_iam_member" "public" {
 #   project  = google_cloud_run_v2_service.app.project
 #   location = google_cloud_run_v2_service.app.location
