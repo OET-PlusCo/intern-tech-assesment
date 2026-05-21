@@ -1,5 +1,18 @@
 # 🏗️ Cloud Architect Assessment
 
+Two complementary tracks:
+
+| Track | Folder | Focus |
+|-------|--------|--------|
+| **v1** | `candidate_materials/` (this tree) | Terraform modularization & multi-tenant **design** (~60 min) |
+| **v2** | [`v2/`](v2/) | Post-`apply` **Cloud Build / Cloud Run / IAM** debugging (~45–90 min, leveled) |
+
+Use **v1** for architecture and module boundaries. Use **v2** for pipeline fluency, build-time env vars, deploy flags, and least-privilege IAM.
+
+---
+
+## v1 — Modularization assessment
+
 A 1-hour live, shared-screen technical assessment designed to evaluate Cloud Architect candidates on **architectural reasoning** rather than rote knowledge or bug-fixing.
 
 ## 📋 Overview

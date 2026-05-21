@@ -1,0 +1,59 @@
+# Cloud Build pipeline — assessment v2 (contains intentional bugs)
+#
+# Substitutions (set on the Cloud Build trigger or `gcloud builds submit`):
+#   _PROJECT_ID, _REGION, _REPOSITORY, _SERVICE_NAME, _APP_GREETING, _CLIENT_ID, _RUNTIME_SA
+#
+# Run from repo root (parent of cloudbuild/):
+#   gcloud builds submit --config=cloudbuild/cloudbuild.yaml .
+
+substitutions:
+  _PROJECT_ID: "CHANGE_ME"
+  _REGION: "us-central1"
+  _REPOSITORY: "acme-webapp"
+  _SERVICE_NAME: "acme-webapp"   # TASK: should be per-client via substitution, not hardcoded elsewhere
+  _APP_GREETING: "Hello from Cloud Build"
+  _CLIENT_ID: "client-acme"
+  _RUNTIME_SA: "acme-webapp-runtime@CHANGE_ME.iam.gserviceaccount.com"
+
+options:
+  logging: CLOUD_LOGGING_ONLY
+
+steps:
+  # --- Build container image ---
+  - id: build-image
+    name: gcr.io/cloud-builders/docker
+    args:
+      - build
+      - -t
+      - ${_REGION}-docker.pkg.dev/${_PROJECT_ID}/${_REPOSITORY}/frontend:$SHORT_SHA
+      - -f
+      - cloudbuild/Dockerfile
+      # BUG 1: substitutions exist above but are NOT passed as --build-arg to Docker.
+      # Candidate: add --build-arg APP_GREETING=${_APP_GREETING} and CLIENT_ID=${_CLIENT_ID}
+      - .
+
+  - id: push-image
+    name: gcr.io/cloud-builders/docker
+    args:
+      - push
+      - ${_REGION}-docker.pkg.dev/${_PROJECT_ID}/${_REPOSITORY}/frontend:$SHORT_SHA
+
+  # --- Deploy to Cloud Run ---
+  - id: deploy-cloud-run
+    name: gcr.io/google.com/cloudsdktool/cloud-sdk
+    entrypoint: gcloud
+    args:
+      - run
+      - deploy
+      - ${_SERVICE_NAME}
+      - --image=${_REGION}-docker.pkg.dev/${_PROJECT_ID}/${_REPOSITORY}/frontend:$SHORT_SHA
+      - --region=${_REGION}
+      - --project=${_PROJECT_ID}
+      - --platform=managed
+      # BUG 3: no --allow-unauthenticated (Terraform also omits public invoker)
+      # BUG 2: --set-env-vars REPLACES all env vars set in Terraform (use --update-env-vars)
+      - --set-env-vars=DEPLOYED_BY=cloud-build
+      - --service-account=${_RUNTIME_SA}
+
+images:
+  - ${_REGION}-docker.pkg.dev/${_PROJECT_ID}/${_REPOSITORY}/frontend:$SHORT_SHA

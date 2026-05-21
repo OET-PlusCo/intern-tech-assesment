@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Assessment Frontend</title>
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 40rem; margin: 2rem auto; padding: 0 1rem; }
+    .badge { background: #e8f0fe; color: #1967d2; padding: 0.25rem 0.5rem; border-radius: 4px; }
+    button { margin-top: 1rem; padding: 0.5rem 1rem; cursor: pointer; }
+    #status { margin-top: 1rem; color: #5f6368; }
+    img { max-width: 100%; margin-top: 1rem; border: 1px solid #dadce0; }
+  </style>
+</head>
+<body>
+  <h1>Hello World</h1>
+  <p>Greeting from build-time env: <strong class="badge">__APP_GREETING__</strong></p>
+  <p>Client: <strong>__CLIENT_ID__</strong></p>
+
+  <button id="uploadBtn" type="button">Upload sample image to Cloud Storage</button>
+  <p id="status"></p>
+  <div id="preview"></div>
+
+  <script>
+    document.getElementById('uploadBtn').addEventListener('click', async () => {
+      const status = document.getElementById('status');
+      const preview = document.getElementById('preview');
+      status.textContent = 'Uploading…';
+      preview.innerHTML = '';
+      try {
+        const res = await fetch('/api/upload', { method: 'POST' });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || res.statusText);
+        status.textContent = 'Upload OK. Loading preview…';
+        if (data.imageUrl) {
+          preview.innerHTML = '<img alt="uploaded" src="' + data.imageUrl + '" />';
+        }
+      } catch (e) {
+        status.textContent = 'Error: ' + e.message;
+      }
+    });
+  </script>
+</body>
+</html>
