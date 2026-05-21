@@ -7,7 +7,7 @@ After `cloudbuild.yaml` works with `gcloud builds submit`, create a **Cloud Buil
 - `cloudbuild.googleapis.com` enabled
 - Terraform applied; note outputs: `service_name`, `runtime_service_account`, `artifact_registry_repo`
 - Source in **Cloud Source Repositories**, **GitHub** (connected to GCP), or **GitLab** — your interviewer will say which to use
-- Deployer SA can run builds (see `terraform/iam_cloudbuild.tf.example` — uncomment or add equivalent IAM)
+- Deployer SA can run builds (see `terraform/deploy/iam_cloudbuild.tf.example` — uncomment or add equivalent IAM)
 
 ## Substitution map (required on every trigger)
 
@@ -41,7 +41,7 @@ gcloud builds triggers create manual acme-webapp-deploy \
 
 Then in Console: **Cloud Build → Triggers → Run** on `acme-webapp-deploy`.
 
-**Strong answer:** Same trigger defined in Terraform (`terraform/cloudbuild_trigger.tf.example`) or committed `gcloud` script.
+**Strong answer:** Same trigger defined in Terraform (`terraform/deploy/cloudbuild_trigger.tf.example`) or committed `gcloud` script.
 
 ---
 
@@ -75,7 +75,7 @@ gcloud builds triggers create cloud-source-repositories acme-webapp-on-push \
 
 Requires an existing **Cloud Build connection** in the project (interviewer sets up, or you create via Console / `gcloud builds connections create`).
 
-Use Console **Cloud Build → Triggers → Create**, or Terraform `google_cloudbuild_trigger` with `repository_event_config` (see `terraform/cloudbuild_trigger.tf.example`).
+Use Console **Cloud Build → Triggers → Create**, or Terraform `google_cloudbuild_trigger` with `repository_event_config` (see `terraform/deploy/cloudbuild_trigger.tf.example`).
 
 Wire the same substitutions as in Option A.
 
@@ -83,7 +83,7 @@ Wire the same substitutions as in Option A.
 
 ## Option D — Terraform trigger (preferred for “good” score)
 
-Copy `terraform/cloudbuild_trigger.tf.example` → `cloudbuild_trigger.tf`, set `create_cloudbuild_trigger = true` in `terraform.tfvars`, adjust `source_repo_name` / connection variables, `terraform apply`.
+Copy `terraform/deploy/cloudbuild_trigger.tf.example` → `terraform/deploy/cloudbuild_trigger.tf`, set `create_cloudbuild_trigger = true` in `terraform.tfvars`, adjust `source_repo_name` / connection variables, `terraform apply`.
 
 ---
 

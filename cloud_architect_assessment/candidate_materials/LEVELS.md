@@ -1,4 +1,4 @@
-# Assessment levels — v2
+# Deploy track — assessment levels
 
 Pick one track based on role seniority and time available. All levels share the same repo; higher levels include more bugs and discussion.
 

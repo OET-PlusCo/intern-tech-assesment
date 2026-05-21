@@ -1,4 +1,4 @@
-# Cloud Architect Assessment v2 — Candidate Instructions
+# Cloud Architect Assessment — Deploy & Debug Track
 
 **Duration:** 45–90 minutes (level-dependent) · **Format:** Live screen-share · **Cloud:** GCP
 
@@ -12,7 +12,7 @@ Your sandbox already has (or will have) Terraform applied. The pipeline and app 
 
 | Path | Purpose |
 |------|---------|
-| `terraform/` | Base stack (Cloud Run, GCS, Artifact Registry, service accounts) |
+| `terraform/deploy/` | Base stack (Cloud Run, GCS, Artifact Registry, service accounts) |
 | `frontend/` | Node app: Hello World + greeting from env + GCS upload button |
 | `cloudbuild/cloudbuild.yaml` | CI: build image → push → deploy Cloud Run |
 | `cloudbuild/Dockerfile` | Multi-stage build for the frontend |
@@ -21,8 +21,8 @@ Your sandbox already has (or will have) Terraform applied. The pipeline and app 
 
 ## Flow
 
-1. **Terraform** — `terraform apply` (fix API enablement if apply fails).
-2. **Cloud Build (manual)** — `gcloud builds submit` to validate `cloudbuild.yaml`.
+1. **Terraform** — `terraform apply` in `terraform/deploy/` (fix API enablement if apply fails).
+2. **Cloud Build (manual)** — `gcloud builds submit` from `candidate_materials/` to validate `cloudbuild.yaml`.
 3. **Cloud Build trigger** — create a trigger (manual or on push) with per-client **substitutions** — see `cloudbuild/TRIGGER.md`.
 4. **Verify** — run the trigger, open the Cloud Run URL, check the greeting, try the upload button.
 5. **Fix** — resolve seeded bugs until the app behaves as expected for a public demo.

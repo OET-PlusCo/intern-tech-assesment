@@ -1,4 +1,4 @@
-# Cloud Build pipeline — assessment v2 (contains intentional bugs)
+# Cloud Build pipeline — deploy track (contains intentional bugs)
 #
 # Substitutions (set on the Cloud Build trigger or `gcloud builds submit`):
 #   _PROJECT_ID, _REGION, _REPOSITORY, _SERVICE_NAME, _APP_GREETING, _CLIENT_ID, _RUNTIME_SA

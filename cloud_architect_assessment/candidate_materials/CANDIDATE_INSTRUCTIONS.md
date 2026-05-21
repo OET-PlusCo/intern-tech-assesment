@@ -1,6 +1,8 @@
-# Cloud Architect Assessment — Candidate Instructions
+# Cloud Architect Assessment — Modularization Track
 
 Welcome, and thanks for taking the time. This is a **60-minute live exercise** done over screen-share.
+
+> **Other track:** For the hands-on **deploy & debug** exercise (Cloud Build, Cloud Run, seeded bugs), see [`CANDIDATE_INSTRUCTIONS_DEPLOY.md`](CANDIDATE_INSTRUCTIONS_DEPLOY.md).
 
 ## The Setup
 

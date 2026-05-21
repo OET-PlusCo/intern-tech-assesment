@@ -1,5 +1,5 @@
 ###############################################################################
-# Webapp Stack v2 — base infrastructure (post-apply: use Cloud Build)
+# Webapp Stack — deploy track base infrastructure (post-apply: use Cloud Build)
 #
 # Intentional assessment gaps (candidates fix during session):
 #   - APIs are NOT auto-enabled (enable via Terraform or gcloud)

@@ -2,7 +2,7 @@
 
 **KEEP PRIVATE — do not share with candidate.**
 
-This is your run-of-show for the 60-minute live assessment. Pair it with:
+This is your run-of-show for the **modularization** track (60-minute live assessment). For the deploy & debug track, use `INTERVIEWER_GUIDE_DEPLOY.md`. Pair with:
 - `SOLUTION_GUIDE.md` — what a good refactor looks like (multiple valid versions)
 - `ANSWER_KEY_QUESTIONS.md` — what to listen for in the discussion
 - `SCORECARD.md` — the rubric to fill out after
