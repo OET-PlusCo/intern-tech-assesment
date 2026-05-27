@@ -1,0 +1,4 @@
+# Example tfvars — copy to terraform.tfvars and edit if needed.
+# Most config is currently hardcoded in main.tf (intentional, for the assessment).
+
+image_tag = "latest"
