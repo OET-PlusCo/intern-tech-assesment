@@ -16,16 +16,24 @@ That directory is listed in `.gitignore`. Git will never commit it.
 
 ```
 interviewer_materials/
-├── INTERVIEWER_GUIDE.md
-├── INTERVIEWER_GUIDE_DEPLOY.md
+├── INTERVIEWER_GUIDE.md                      ← Modularization track
+├── INTERVIEWER_GUIDE_DEPLOY_COMPLETE.md      ← Deploy track (single source: bugs, scorecard, Q&A)
+├── Cloud_Architect_Assessment_Interviewer_Guide_Deploy.docx
+├── Cloud_Architect_Assessment_Interviewer_Guide_Deploy.pdf
+├── generate_docx.py
+├── generate_pdf_fpdf.py
+├── generate_pdf.py                           ← runs PDF + DOCX generation
 ├── SOLUTION_GUIDE.md
 ├── ANSWER_KEY_QUESTIONS.md
-├── SCORECARD.md
-├── SCORECARD_DEPLOY.md
-├── BUGS_AND_SOLUTIONS.md
-├── DISCUSSION_QUESTIONS_DEPLOY.md
-├── LEVELS_DEPLOY.md
-└── ANALYSIS_DEPLOY.md
+└── SCORECARD.md                              ← Modularization track
+```
+
+### Regenerate deploy guide outputs
+
+From `interviewer_materials/`:
+
+```sh
+python generate_pdf.py
 ```
 
 Share only `candidate_materials/` with candidates (includes `TESTING.md` for deploy-track verification).

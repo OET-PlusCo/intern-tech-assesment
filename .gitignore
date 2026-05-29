@@ -196,5 +196,17 @@ cython_debug/
 
 # Cloud Architect assessment — interviewer answer keys (local only)
 cloud_architect_assessment/interviewer_materials/
+# Deploy-track interviewer files must never be committed (belt-and-suspenders)
+**/INTERVIEWER_GUIDE_DEPLOY*.md
+**/SCORECARD_DEPLOY.md
+**/BUGS_AND_SOLUTIONS.md
+**/DISCUSSION_QUESTIONS_DEPLOY.md
+**/LEVELS_DEPLOY.md
+**/ANALYSIS_DEPLOY.md
+**/Cloud_Architect_Assessment_Interviewer_Guide_Deploy*
+# Terraform local state and secrets (never commit)
+*.tfstate
+*.tfstate.*
+**/terraform.tfvars
 cloud_architect_assessment/candidate_materials/frontend/terraform/.terraform.lock.hcl
 cloud_architect_assessment/candidate_materials/frontend/terraform/.terraform
