@@ -1,0 +1,4 @@
+project_id  = "your-gcp-project-id"
+region      = "us-central1"
+client_id   = "client-acme"
+client_slug = "acme"
