@@ -1,5 +1,5 @@
 output "service_url" {
-  description = "Cloud Run service URL (may return 403 until public access is fixed)"
+  description = "Cloud Run service URL"
   value       = google_cloud_run_v2_service.app.uri
 }
 

@@ -6,7 +6,7 @@ Use this checklist after Terraform apply, Cloud Build, and trigger setup. Your i
 
 1. Get the Cloud Run URL:
    ```sh
-   cd terraform/deploy
+   cd frontend/terraform/deploy
    terraform output service_url
    ```
 2. Open that URL in a browser.

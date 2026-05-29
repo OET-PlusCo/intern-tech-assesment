@@ -5,7 +5,7 @@ Deploys one client stack: Artifact Registry, GCS bucket, Cloud Run, service acco
 ## Apply
 
 ```sh
-cd candidate_materials/terraform/deploy
+cd candidate_materials/frontend/terraform/deploy
 cp terraform.tfvars.example terraform.tfvars
 # Edit project_id
 
@@ -18,10 +18,10 @@ Outputs: `service_name`, `artifact_registry_repo`, `assets_bucket`, `runtime_ser
 
 ## Cloud Build
 
-From `candidate_materials/`:
+From `candidate_materials/frontend/`:
 
 ```sh
-gcloud builds submit --config=cloudbuild/cloudbuild.yaml .
+gcloud builds submit --config=cloudbuild.yaml .
 ```
 
-See `../../cloudbuild/TRIGGER.md` for trigger setup.
+See `../../TRIGGER.md` for trigger setup.

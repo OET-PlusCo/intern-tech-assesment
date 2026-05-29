@@ -9,7 +9,6 @@ Pass per-client values on a **Cloud Build trigger** (or `gcloud builds submit --
 - Source repository (Cloud Source Repositories, GitHub, or GitLab) — your interviewer will specify
 - Deployer service account IAM for running builds (`terraform/deploy/iam_cloudbuild.tf.example`)
 
-
-Build context is `candidate_materials/` (contains `cloudbuild/` and `frontend/`).
+Build context is `frontend/` (contains `cloudbuild.yaml`, `Dockerfile`, and the Next.js app).
 
 Run from Console: **Cloud Build → Triggers → Run**.

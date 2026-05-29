@@ -24,11 +24,10 @@ cloud_architect_assessment/
     ├── CANDIDATE_INSTRUCTIONS_DEPLOY.md
     ├── TESTING.md                      ← E2E verification (deploy track)
     ├── ARCHITECTURE_QUESTIONS.md
-    ├── frontend/
-    ├── cloudbuild/
+    ├── frontend/               ← Next.js app + Cloud Build + deploy Terraform
+    │   └── terraform/deploy/
     └── terraform/
-        ├── main.tf               ← Monolith (modularization)
-        └── deploy/               ← Deploy track infra
+        └── main.tf               ← Monolith (modularization)
 ```
 
 **Interviewer guides, scorecards, and answer keys** live in `interviewer_materials/` on your machine only — see [`INTERVIEWER_SETUP.md`](INTERVIEWER_SETUP.md). That folder is **gitignored** and must not be pushed.
@@ -53,8 +52,8 @@ cloud_architect_assessment/
 
 ## Track 2 — Deploy & debug (~45–90 min)
 
-1. `terraform apply` in `candidate_materials/terraform/deploy/`
-2. `gcloud builds submit` then create a Cloud Build trigger (`cloudbuild/TRIGGER.md`)
+1. `terraform apply` in `candidate_materials/frontend/terraform/deploy/`
+2. `gcloud builds submit` then create a Cloud Build trigger (`frontend/TRIGGER.md`)
 3. Candidate completes the flow in `candidate_materials/TESTING.md` (greeting, upload, image on page)
 
 Scope and level are set by the interviewer using the local materials pack.

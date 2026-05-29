@@ -196,3 +196,5 @@ cython_debug/
 
 # Cloud Architect assessment — interviewer answer keys (local only)
 cloud_architect_assessment/interviewer_materials/
+cloud_architect_assessment/candidate_materials/frontend/terraform/.terraform.lock.hcl
+cloud_architect_assessment/candidate_materials/frontend/terraform/.terraform

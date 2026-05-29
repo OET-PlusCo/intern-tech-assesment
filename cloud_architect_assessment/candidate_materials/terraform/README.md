@@ -56,4 +56,4 @@ ID. That doesn't scale to 10 clients, let alone 50.
 
 Refer to `../CANDIDATE_INSTRUCTIONS.md` for the **modularization** track.
 
-For the **deploy & debug** track (separate Terraform stack), see [`deploy/README.md`](deploy/README.md) and `../CANDIDATE_INSTRUCTIONS_DEPLOY.md`.
+For the **deploy & debug** track (separate Terraform stack), see [`../frontend/terraform/deploy/README.md`](../frontend/terraform/deploy/README.md) and `../CANDIDATE_INSTRUCTIONS_DEPLOY.md`.

@@ -12,16 +12,14 @@ Apply Terraform, run the pipeline, create a **Cloud Build trigger**, and get the
 
 | Path | Purpose |
 |------|---------|
-| `terraform/deploy/` | Cloud Run, GCS, Artifact Registry, service accounts |
-| `frontend/` | Next.js app + `/api/upload` |
-| `cloudbuild/` | `cloudbuild.yaml`, `Dockerfile`, `TRIGGER.md` |
+| `frontend/` | Next.js app, `/api/upload`, Cloud Build config, `terraform/deploy/` stack |
 | `TESTING.md` | End-to-end verification checklist |
 
 ## Flow
 
-1. `terraform apply` in `terraform/deploy/`
-2. `gcloud builds submit` from this folder (see `cloudbuild/cloudbuild.yaml`)
-3. Create a Cloud Build trigger with per-client substitutions (`cloudbuild/TRIGGER.md`)
+1. `terraform apply` in `frontend/terraform/deploy/`
+2. `gcloud builds submit` from `frontend/` (see `frontend/cloudbuild.yaml`)
+3. Create a Cloud Build trigger with per-client substitutions (`frontend/TRIGGER.md`)
 4. Run the trigger and complete the steps in [`TESTING.md`](TESTING.md)
 
 ## Testing scenario (summary)
