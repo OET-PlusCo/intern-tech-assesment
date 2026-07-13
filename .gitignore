@@ -193,3 +193,8 @@ cython_debug/
 .cursorignore
 .cursorindexingignore
 *.csv
+# Interviewer-only materials (kept locally, never shared with candidates)
+frontend_assessment/interviewer/
+
+# Internal planning docs (specs/plans) — kept locally, not shared
+docs/superpowers/
