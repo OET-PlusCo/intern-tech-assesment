@@ -16,8 +16,7 @@ https://www.figma.com/design/QL4OJDfI125fb0Uskn5mhF/Frontend-Assesment?node-id=2
   "Search through 300+ movies online".
 - A "Search" section heading.
 - A responsive grid of movie cards (4 across on desktop). Each card shows the
-  poster, the title, a star rating, and small `genre • type` labels.
-- A pagination control at the bottom (prev arrow · `2 / 50` · next arrow).
+  poster, the title, and a star rating.
 
 ## Palette & type (already wired into `starter/src/index.css`)
 

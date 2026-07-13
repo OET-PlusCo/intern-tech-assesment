@@ -15,10 +15,10 @@ Open the local URL Vite prints.
 ## Layout
 
 - `src/api/tmdb.js` — TMDB helper (auth wired; `searchMovies()` to implement).
-- `src/components/Search.jsx` — search input (to implement).
-- `src/components/MovieCard.jsx` — result card (to implement).
+- `src/components/Search.jsx` — search input shell (provided; controlled via props).
+- `src/components/MovieCard.jsx` — result card (to create).
 - `src/components/Spinner.jsx` — loading spinner (provided).
-- `src/App.jsx` — app shell, state, and layout (to implement).
+- `src/App.jsx` — hero + search already rendered; wire fetch + grid (TODOs).
 - `src/index.css` — Tailwind import + design theme tokens (provided).
 
 Tailwind v4 is configured via the `@tailwindcss/vite` plugin and the `@theme`
