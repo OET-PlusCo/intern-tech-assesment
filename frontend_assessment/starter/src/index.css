@@ -18,11 +18,3 @@ body {
   font-family: var(--font-dm-sans);
   background: var(--color-primary);
 }
-
-/* Decorative hero glow — approximates the light beams in the design so the
-   candidate does not need to reproduce the background gradient by hand. */
-.hero-pattern {
-  background:
-    radial-gradient(ellipse at top, rgba(171, 139, 255, 0.25), transparent 55%),
-    var(--color-primary);
-}
