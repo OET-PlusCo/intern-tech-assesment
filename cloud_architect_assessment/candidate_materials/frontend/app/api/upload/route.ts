@@ -2,6 +2,7 @@ import { Storage } from '@google-cloud/storage';
 import { NextResponse } from 'next/server';
 
 const assetsBucket = process.env.ASSETS_BUCKET || '';
+const storage = new Storage();
 
 function extensionFromType(type: string): string {
   if (type === 'image/jpeg') return 'jpg';
@@ -37,7 +38,6 @@ export async function POST(request: Request) {
     const ext = extensionFromType(uploadFile.type);
     const objectName = `uploads/${Date.now()}-${uploadFile.name.replace(/[^a-zA-Z0-9._-]/g, '_') || `upload.${ext}`}`;
 
-    const storage = new Storage();
     const gcsFile = storage.bucket(assetsBucket).file(objectName);
 
     await gcsFile.save(buffer, {
