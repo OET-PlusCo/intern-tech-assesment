@@ -4,8 +4,8 @@ Live, shared-screen GCP assessments for Cloud Architect candidates. Two compleme
 
 | Track | Candidate doc | Focus | Duration |
 |-------|---------------|--------|----------|
-| **Modularization** | `candidate_materials/CANDIDATE_INSTRUCTIONS.md` | Terraform modules & multi-tenant **design** | ~60 min |
-| **Deploy & debug** | `candidate_materials/CANDIDATE_INSTRUCTIONS_DEPLOY.md` | Cloud Build, Cloud Run, IAM | ~45–90 min |
+| **1. Modularization** | `1.modularization/candidate_materials/CANDIDATE_INSTRUCTIONS_MODULAR.md` | Terraform modules & multi-tenant **design** | ~60 min |
+| **2. Deploy & debug** | `2.debug-and-deploy/CANDIDATE_INSTRUCTIONS_DEPLOY.md` | Cloud Build, Cloud Run, IAM | ~45–90 min |
 
 Use **modularization** for architecture and module boundaries. Use **deploy & debug** for pipeline fluency, build-time env vars, deploy flags, and least-privilege IAM.
 
@@ -17,17 +17,19 @@ Use **modularization** for architecture and module boundaries. Use **deploy & de
 cloud_architect_assessment/
 │
 ├── README.md
-├── INTERVIEWER_SETUP.md          ← How to install local interviewer pack
+├── INTERVIEWER_SETUP.md                    ← How to install local interviewer pack
 │
-└── candidate_materials/          ← Share with candidate only
-    ├── CANDIDATE_INSTRUCTIONS.md
+├── 1.modularization/
+│   └── candidate_materials/                ← Share with candidate only
+│       ├── CANDIDATE_INSTRUCTIONS_MODULAR.md
+│       └── terraform/
+│           └── main.tf                     ← Monolith they refactor
+│
+└── 2.debug-and-deploy/                     ← Share with candidate only
     ├── CANDIDATE_INSTRUCTIONS_DEPLOY.md
-    ├── TESTING.md                      ← E2E verification (deploy track)
-    ├── ARCHITECTURE_QUESTIONS.md
-    ├── frontend/               ← Next.js app + Cloud Build + deploy Terraform
-    │   └── terraform/deploy/
-    └── terraform/
-        └── main.tf               ← Monolith (modularization)
+    ├── TESTING.md                          ← E2E verification (deploy track)
+    └── frontend/                           ← Next.js app + Cloud Build + deploy Terraform
+        └── terraform/
 ```
 
 **Interviewer guides, scorecards, and answer keys** live in `interviewer_materials/` on your machine only — see [`INTERVIEWER_SETUP.md`](INTERVIEWER_SETUP.md). That folder is **gitignored** and must not be pushed.
@@ -52,9 +54,9 @@ cloud_architect_assessment/
 
 ## Track 2 — Deploy & debug (~45–90 min)
 
-1. `terraform apply` in `candidate_materials/frontend/terraform/deploy/`
+1. `terraform apply` in `2.debug-and-deploy/frontend/terraform/`
 2. `gcloud builds submit` then create a Cloud Build trigger (`frontend/TRIGGER.md`)
-3. Candidate completes the flow in `candidate_materials/TESTING.md` (greeting, upload, image on page)
+3. Candidate completes the flow in `2.debug-and-deploy/TESTING.md` (greeting, upload, image on page)
 
 Scope and level are set by the interviewer using the local materials pack.
 

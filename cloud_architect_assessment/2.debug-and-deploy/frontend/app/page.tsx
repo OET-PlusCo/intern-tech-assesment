@@ -19,17 +19,8 @@ export default function HomePage() {
 
     try {
       const res = await fetch('/api/upload', { method: 'POST', body });
-      if (!res.ok) {
-        let errorMsg = res.statusText;
-        try {
-          const data = await res.json();
-          errorMsg = data.error || errorMsg;
-        } catch {
-          // response body wasn't JSON (e.g. a 502/504 from Cloud Run)
-        }
-        throw new Error(errorMsg || `Upload failed with status ${res.status}`);
-      }
       const data = await res.json();
+      if (!res.ok) throw new Error(data.error || res.statusText);
       setStatus('Upload OK.');
       if (data.imageUrl) setImageUrl(data.imageUrl);
     } catch (e) {
