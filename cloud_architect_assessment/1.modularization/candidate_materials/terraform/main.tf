@@ -229,8 +229,7 @@ resource "google_sql_database_instance" "main" {
 
     ip_configuration {
       ipv4_enabled = true
-      # NOTE: this is permissive for the assessment — in real life this is
-      # locked down to specific networks. Don't refactor this away.
+      # Locked down to specific networks in production.
       authorized_networks {
         name  = "all"
         value = "0.0.0.0/0"
@@ -274,10 +273,6 @@ resource "google_cloud_run_v2_service" "app" {
     }
 
     containers {
-      # Public placeholder image for the assessment. In production this would
-      # be pulled from the Artifact Registry repo above (built/pushed by CI).
-      # Using a public image here so `terraform apply` works in a fresh
-      # assessment GCP project without needing to pre-push an image.
       image = "gcr.io/cloudrun/hello"
 
       resources {
