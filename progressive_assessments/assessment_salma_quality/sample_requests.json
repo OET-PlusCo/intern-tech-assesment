@@ -1,0 +1,111 @@
+{
+  "_readme": "Use these examples with curl, Postman, or the /docs UI. Each example is designed to help you discover a specific behaviour of the API.",
+
+  "curl_quick_reference": {
+    "list_competitors":  "curl http://localhost:8001/competitors",
+    "health_check":      "curl http://localhost:8001/health",
+    "basic_detailed":    "curl -X POST http://localhost:8001/analyze -H 'Content-Type: application/json' -d '{\"query\": \"What is their market position?\", \"competitor\": \"PhosphoTech\"}'",
+    "brief_format":      "curl -X POST http://localhost:8001/analyze -H 'Content-Type: application/json' -d '{\"query\": \"What is their market position?\", \"competitor\": \"PhosphoTech\", \"format\": \"brief\"}'",
+    "unknown_competitor":"curl -X POST http://localhost:8001/analyze -H 'Content-Type: application/json' -d '{\"query\": \"What are their recent moves?\", \"competitor\": \"UnknownCorp\"}'",
+    "invalid_format":    "curl -X POST http://localhost:8001/analyze -H 'Content-Type: application/json' -d '{\"query\": \"Summarize this competitor\", \"competitor\": \"AgriGlobal\", \"format\": \"executive\"}'"
+  },
+
+  "scenarios": [
+    {
+      "id": "S-01",
+      "name": "Happy path — detailed format",
+      "description": "A standard analyst query. Run this first to verify the API works at all.",
+      "endpoint": "POST /analyze",
+      "body": {
+        "query": "What is their current market position?",
+        "competitor": "PhosphoTech",
+        "format": "detailed",
+        "analyst_id": "analyst_001"
+      },
+      "expected": "HTTP 200. Summary should mention 'PhosphoTech'. Insights should be non-empty."
+    },
+    {
+      "id": "S-02",
+      "name": "Brief format — repeat 4 times",
+      "description": "Run this exact request 4–5 times and compare the 'summary' field each time.",
+      "endpoint": "POST /analyze",
+      "body": {
+        "query": "What is their current market position?",
+        "competitor": "PhosphoTech",
+        "format": "brief"
+      },
+      "hint": "Pay close attention to which company name appears in the summary across runs. Is it always PhosphoTech?"
+    },
+    {
+      "id": "S-03",
+      "name": "Unknown competitor",
+      "description": "What does the API return when the competitor is not in the knowledge base?",
+      "endpoint": "POST /analyze",
+      "body": {
+        "query": "What are their recent strategic moves?",
+        "competitor": "UnknownCorp"
+      },
+      "hint": "Look at the HTTP status code AND the response body. What would an analyst see? Is that the right behaviour?"
+    },
+    {
+      "id": "S-04",
+      "name": "Reproducibility check — run twice",
+      "description": "Send this identical request twice and compare 'confidence' in both responses.",
+      "endpoint": "POST /analyze",
+      "body": {
+        "query": "What is their market share?",
+        "competitor": "AgriGlobal",
+        "format": "detailed"
+      },
+      "hint": "Same inputs should give the same outputs. If they don't, what are the implications for tracking quality?"
+    },
+    {
+      "id": "S-05",
+      "name": "Invalid format value",
+      "description": "Pass a format value that is not in the documented spec ('detailed' or 'brief').",
+      "endpoint": "POST /analyze",
+      "body": {
+        "query": "Give me an executive summary",
+        "competitor": "NutriCorp",
+        "format": "executive"
+      },
+      "hint": "Does the API tell you that 'executive' is not a valid option? What actually happens?"
+    },
+    {
+      "id": "S-06",
+      "name": "Batch — brief format across all competitors",
+      "description": "Compare all three competitors using brief format in a single batch request.",
+      "endpoint": "POST /analyze/batch",
+      "body": {
+        "queries": [
+          { "query": "Market position?", "competitor": "PhosphoTech", "format": "brief" },
+          { "query": "Market position?", "competitor": "AgriGlobal",  "format": "brief" },
+          { "query": "Market position?", "competitor": "NutriCorp",   "format": "brief" }
+        ]
+      },
+      "hint": "Check each entry in 'analyses'. Does each summary name the right competitor?"
+    },
+    {
+      "id": "S-07",
+      "name": "Missing required field",
+      "description": "Send a request without the required 'competitor' field.",
+      "endpoint": "POST /analyze",
+      "body": {
+        "query": "What are their recent moves?"
+      },
+      "expected": "HTTP 422 Unprocessable Entity from Pydantic validation."
+    },
+    {
+      "id": "S-08",
+      "name": "Product-focused query",
+      "description": "A product-intent query to verify the API routes correctly.",
+      "endpoint": "POST /analyze",
+      "body": {
+        "query": "What products are in their portfolio?",
+        "competitor": "NutriCorp",
+        "format": "detailed"
+      },
+      "expected": "Insights should reference product names, not recent moves."
+    }
+  ]
+}

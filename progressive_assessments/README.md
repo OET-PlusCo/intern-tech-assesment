@@ -1,14 +1,15 @@
 # Progressive AI Developer Assessments
 
-A series of 3 progressively challenging assessments (10 minutes each) designed to evaluate AI developer candidates during live interviews.
+A series of assessments designed to evaluate AI developer candidates and AI product quality engineers during live interviews.
 
 ## 📋 Overview
 
-| Assessment | Difficulty | Time | Focus Areas |
-|-----------|------------|------|-------------|
-| **#1: Titanic Classification** | Beginner | 10 min | Debugging, data science basics |
-| **#2: TBD** | Intermediate | 10 min | TBD |
-| **#3: TBD** | Advanced | 10 min | TBD |
+| Assessment | Difficulty | Time | Role | Focus Areas |
+|-----------|------------|------|------|-------------|
+| **#1: Titanic Classification** | Beginner | 10 min | AI Developer | Debugging, data science basics |
+| **#2: Production ML API** | Intermediate | 10 min | AI Developer | FastAPI, memory, efficiency, validation |
+| **#3: Containerized ML API** | Advanced | 10 min | AI Developer | Docker security, containers, DevOps |
+| **Salma: AI Product Quality** | Intermediate | 20 min | AI Quality Engineer | Test plans, bug documentation, product thinking |
 
 ---
 
@@ -111,16 +112,57 @@ Each bug can be fixed in 2-4 different ways - tests candidate's depth of knowled
 
 ---
 
-## 📊 Progression Summary
+---
 
-| Assessment | Difficulty | Time | Focus | Critical Bugs | Subtle Bugs |
-|-----------|------------|------|-------|---------------|-------------|
-| #1: Titanic | Beginner | 10 min | ML basics, debugging | 2 | 2 |
-| #2: FastAPI | Intermediate | 10 min | Production ML, APIs | 2 | 2 |
-| #3: Docker | Advanced | 10 min | Security, containers | 2 | 2 |
+## 🎯 Assessment: AI Product Quality Engineer (Salma profile)
 
-**Total assessment time**: 30 minutes (can use all 3 or pick individually)
+**Location**: `assessment_salma_quality/`
+
+### What It Tests
+- Product & business thinking (not just code correctness)
+- Writing structured test plans for AI systems
+- Bug discovery through systematic exploration
+- Bug documentation quality (reproduction steps, business impact, severity)
+- Automation mindset (regression test design)
+- Communication — does the candidate ask questions vs. assume?
+
+### Issues Included
+- **Issue #1 (CRITICAL)**: Data corruption — wrong competitor name shown in brief format
+- **Issue #2 (CRITICAL)**: Silent failure — unknown competitor returns HTTP 200 with empty data
+- **Issue #3 (HIGH)**: Non-reproducible confidence scores — same query, different values every time
+- **Issue #4 (MEDIUM)**: No format validation — invalid format values accepted silently
+
+### Key Differentiator vs. Developer Assessments
+Candidates are **not asked to fix the code**. They are asked to:
+1. Write a test plan before touching anything
+2. Discover issues through systematic testing
+3. Document findings as professional bug reports with **business impact**
+4. Write regression tests to catch these issues in future releases
+
+### Files
+- `competitor_intelligence_api.py` — FastAPI app with 4 issues (share with candidate)
+- `test_competitor_api.py` — Exploration + pytest stubs (share with candidate)
+- `sample_requests.json` — Guided test scenarios (share with candidate)
+- `requirements.txt` — Dependencies (share with candidate)
+- `README.md` — Candidate instructions (share with candidate)
+- `SOLUTION_GUIDE.md` — Full expected answers & fix code (interviewer only)
+- `INTERVIEWER_CHECKLIST.md` — Scoring guide & discussion questions (interviewer only)
+
+### How to Use
+1. Share all non-interviewer files with the candidate
+2. Ask them to write a test plan BEFORE running anything (~5 min)
+3. Let them run the exploration script and find issues (~8–10 min)
+4. Ask them to document findings as bug reports (~5 min)
+5. If time permits: ask them to fill in the pytest stubs
+6. Use `INTERVIEWER_CHECKLIST.md` to score each dimension
 
 ---
 
-##Human: continue please create the second assesment the intermediate one
+## 📊 Assessment Summary
+
+| Assessment | Time | Role Target | Focus | Issues |
+|-----------|------|-------------|-------|--------|
+| #1: Titanic | 10 min | AI Developer | ML debugging | 4 (fix code) |
+| #2: FastAPI | 10 min | AI Developer | Production ML | 4 (fix code) |
+| #3: Docker | 10 min | AI Developer | Security/DevOps | 4 (fix code) |
+| Salma: Quality | 20 min | AI Quality Engineer | Test & document | 4 (find & document) |
